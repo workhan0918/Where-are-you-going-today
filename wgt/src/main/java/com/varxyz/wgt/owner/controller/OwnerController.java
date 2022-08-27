@@ -30,13 +30,12 @@ public class OwnerController {
 		Owner dbOwner = new Owner();
 		dbOwner = ownerService.findAllOwner(owner.getOwnerId());
 		
-		// 사업자 중복검사 
-		System.out.println(owner.getBnumber());
-		if(!ownerService.duplicationBn(owner.getBnumber())) {
-			model.addAttribute("msg", "사업자 번호가 있습니다!!");
-			
-			return "alert/back";
-		}
+//		// 사업자 중복검사 (boolean 타입 형식)
+//		if(!ownerService.duplicationBn(owner.getBnumber())) {
+//			model.addAttribute("msg", "사업자 번호가 있습니다!!");
+//			
+//			return "alert/back";
+//		}
 		
 		// 객체는 null로 비교하면 됨
 		if(dbOwner.getOwnerId() == null) {

@@ -28,7 +28,7 @@
       <span class="text" style="color: #DA0037;">가게 테이블당 최대 수용 인원 수</span>
       	<p class="text">${shop.shopMaxPeoples }</p>
       <span class="text" style="color: #DA0037;">가게 사진</span>
-      	<img src="../resources/shop/shop_Img/${shop.shopImg }.jpg" style="border-radius: 30px;">
+      	<img src="../resources/shop/shop_Img/${shop.shopImg }.jpg" style="border-radius: 30px; width: 100%;">
       </div>
       <table style="color: black; border-radius: 30px;">
         <h1 class="title" style="color: white;">가게 메뉴</h1>
@@ -45,7 +45,7 @@
               </tr>
       	</c:forEach>
       </table>
-      <button type="button" name="button" class="next_btn" style=" width: 80%; margin: 15px 0 25px; border: 5px solid white; border-radius: 30px; box-shadow: 0 10px black;" onclick="location.href='../map/map'">홈으로 돌아가기</button>
+      <button type="button" name="button" class="next_btn" style=" width: 80%; margin: 15px 0 25px; border: 5px solid white; border-radius: 30px; box-shadow: 0 10px black;" onclick="location.href='viewMyShop'">홈으로 돌아가기</button>
     </div>
   </body>
 </html>

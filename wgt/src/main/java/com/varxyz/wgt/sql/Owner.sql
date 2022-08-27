@@ -1,8 +1,7 @@
 CREATE TABLE Owner(
 	ownerId		VARCHAR(20)		PRIMARY KEY,
 	passwd		VARCHAR(20)		NOT NULL,
-	name		VARCHAR(20)		NOT NULL,
-	bnumber		VARCHAR(20)		NOT NULL
+	name		VARCHAR(20)		NOT NULL
 );
 
 SELECT * FROM Owner

@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Map {
-	private String name;
-	private String address;
+	private String shopName;
+	private String businessNumber;
 	private double longitude;
 	private	double latitude;
 }

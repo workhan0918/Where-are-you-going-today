@@ -25,14 +25,15 @@ public class AddMenuController {
 
 	@GetMapping("shop/addMenu")
 	public String addMenuGo(Model model, HttpSession session) {
-		String bNum = (String)session.getAttribute("bNum");
-
+		String bNum = (String)session.getAttribute("bnsNum");
+		
+		
 		if(service.findShopMenuByBnsNum(bNum).size() > 9) {
 			model.addAttribute("msg", "메뉴 등록은 최대 10개 까지만 가능합니다.");
 			model.addAttribute("url", "viewMyShop");
 			return "alert/alert";
 		}
-		model.addAttribute("menuListSize",service.findShopMenuByBnsNum("123-456-789").size());
+		model.addAttribute("menuListSize",service.findShopMenuByBnsNum(bNum).size());
 		return "shop/view/addMenu";
 	}
 
@@ -42,7 +43,13 @@ public class AddMenuController {
 							  @RequestParam("menu_price") int price,
 							  @RequestParam("menu_intro") String menuIntro,
 							  Model model, HttpSession session){
-		String bNum = (String)session.getAttribute("bNum");
+		String bNum = (String)session.getAttribute("bnsNum");
+		
+		if(!service.shopFindMenuCheck( menuName, bNum )) {
+			model.addAttribute("msg", "중복된 메뉴이름은 사용하실 수 없습니다.");
+			return "alert/back";
+		}
+		
 		if(service.findShopMenuByBnsNum(bNum).size() > 9) {
 			model.addAttribute("msg", "메뉴 등록은 최대 10개 까지만 가능합니다.");
 			model.addAttribute("url", "viewMyShop");
@@ -63,8 +70,7 @@ public class AddMenuController {
 		if (fileRealName == null || fileRealName.length() == 0) {
 
 			model.addAttribute("msg","메뉴 사진을 등록해주세요!");
-			model.addAttribute("url","add_shop3");
-			return "alert/alert";
+			return "alert/back";
 
 		}
 
@@ -74,8 +80,6 @@ public class AddMenuController {
 
 		String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 
-		// resources에 temp 폴더 절대 경로 입력 String uploadFolder = "";
-		// 점주가 등록 취소 할 수 있기때문에 우선은 temp폴더에 임시 저장
 		String uploadFolder = "C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\shop\\menu_img";
 
 		// 집 경로

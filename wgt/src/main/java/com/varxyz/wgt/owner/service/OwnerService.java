@@ -24,7 +24,7 @@ public interface OwnerService {
 	// 점주 삭제
 	public void delete(String ownerId);
 	
-	// 사업자번호 중복검사
-	public boolean duplicationBn(String bNumber);
+//	// 사업자번호 중복검사 (boolean 타입 형식)
+//	public boolean duplicationBn(String bNumber);
 		
 }

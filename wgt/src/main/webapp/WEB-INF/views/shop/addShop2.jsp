@@ -134,7 +134,7 @@
             </div>
             <hr>
             <div class="btn_wrap">
-              <input type="button" value="취소하기" onclick="location.href='map/map'" class="prev_btn">
+              <input type="button" value="취소하기" onclick="location.href='login'" class="prev_btn">
               <input type="submit" value="다음으로" class="next_btn">
             </div>
           </form>

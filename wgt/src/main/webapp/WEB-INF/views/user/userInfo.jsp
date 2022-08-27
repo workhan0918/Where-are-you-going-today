@@ -16,38 +16,36 @@
 </head>
 
 <body>
-	<a class="back" href="<c:url value='/map/map'/>"><img src="resources/mapcss/img/backicon.png"></a>
+	
 	<form action="userInfo" method="post" enctype="multipart/form-data">
 		<c:forEach var="user" items="${userList}">
-		<div style="font-size: 100px; text-align: center; padding-top: 40px;">회원정보</div>
+		<div style="font-size: 100px;text-align: center;background: #DA0037;color: white;">회원정보</div>
 		<!-- required는 입력을 안할시 자동으로 입력하라고 알림창을 띄움 -->
 		<div style="text-align: center; padding-top: 20px; font-size: 30px;">아이디 
-		<input type="text" name="userId" value="${user.userId}" readonly></div><br> 
-		
-		<div style="margin-left: 55px; padding-top: 20px; font-size: 30px;">비밀번호 
-		<input type="password" name="passwd" value="${user.passwd}" required></div><br>
+		<input type="text" name="userId" value="${user.userId}" readonly 
+		style="text-align: center; height: 25px;"></div><br> 
 		
 		<div style="margin-left: 95px; padding-top: 20px; font-size: 30px;">이름 
-		<input type="text" name="name" value="${user.name}" required></div><br>
-		
-		<div style="margin-left: 55px; padding-top: 20px; font-size: 30px;">주민번호 
-		<input type="text" name="ssn" value="${user.ssn}" readonly></div><br>
+		<input type="text" name="name" value="${user.name}" required readonly
+		style="text-align: center; height: 25px;"></div><br>
 		
 		<div style="margin-left: 47px; padding-top: 20px; font-size: 30px;">전화번호 
-		<input type="text" name="phone" value="${user.phone}" required></div><br>
+		<input type="text" name="phone" value="${user.phone}" required readonly
+		style=" text-align: center; height: 25px;"></div><br>
 		
 		<div style="text-align: center; padding-bottom: 10px; font-size: 30px;">주소</div>
-        <div><input type="text" name="addr1" value="${user.addr1}" id="sample6_postcode" placeholder="우편번호" style="margin-left: 55px;width: 280px;height: 20px;text-align: center;"></div><br>
-        <div><input type="text" name="addr2" value="${user.addr2}" id="sample6_address" placeholder="주소" style="margin-left: 55px;width: 280px;height: 20px;text-align: center;"></div><br>
-        <div><input type="text" name="addr3" value="${user.addr3}" id="sample6_detailAddress" placeholder="상세주소" style="margin-left: 55px;width: 280px;height: 20px;text-align: center;"></div><br>
-        <input type="text" name="addr4" value="${user.addr4}" id="sample6_extraAddress" placeholder="참고항목" style="margin-left: 55px;width: 280px;height: 20px;text-align: center;">
+        <div><input type="text" name="addr1" value="${user.addr1}" id="sample6_postcode" placeholder="우편번호" style="margin-left: 55px;width: 280px; height: 25px; text-align: center;" readonly></div><br>
+        <div><input type="text" name="addr2" value="${user.addr2}" id="sample6_address" placeholder="주소" style="margin-left: 55px;width: 280px; height: 25px; text-align: center;" readonly></div><br>
+        <div><input type="text" name="addr3" value="${user.addr3}" id="sample6_detailAddress" placeholder="상세주소" style="margin-left: 55px;width: 280px; height: 25px; text-align: center;" readonly></div><br>
+        <input type="text" name="addr4" value="${user.addr4}" id="sample6_extraAddress" placeholder="참고항목" style="margin-left: 55px;width: 280px; height: 25px; text-align: center;" readonly>
 		
 		<div style="text-align: center; font-size: 30px; padding-top: 10px;">프로필 사진<br>
 		<img src="resources/user/img/${user.imgName}.jpg" id="profileImg" name="imgName" style="width: 100px; height: 100px;" /><br></div>  
 		
 		</c:forEach>
 	</form>
-		<button type="submit" class="sBtn" onclick="location.href='modifyUser';">수정하기</button>
+		<button type="submit" class="sBtn" onclick="location.href='modifyUser';" style="margin-top: 10px; margin-bottom: 10px; background: gray;">수정하기</button>
+		<button type="submit" class="sBtn" onclick="location.href='map/map';">뒤로가기</button>
 </body>
 
 	<!-- 스크립트 영역 -->

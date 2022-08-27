@@ -46,7 +46,7 @@
             <p style="text-align:center; font-size: 22px; margin-top: 15px;">수정 할 사진을 업로드 해주세요!<br>전의 사진을 그대로 사용하고싶다면<br>사진 업로드를 하지 않으셔도 됩니다.</p>
             <div class="file_upload_wrap">
               <label for="upload_file" class="upload_label">사진 등록</label>
-              <input id="upload_file" type="file" name="shop_img" onchange="readURL(this)" accept="image/jpeg, image/png, image/jpg">
+              <input id="upload_file" type="file" name="shop_img" onchange="readURL(this)" accept=".jpg">
               <br>
               <span style="margin-bottom: 15px; font-size: 28px;">미리보기</span>
               <img style="width: 380px; height: 400px;" id="preview" />
@@ -146,7 +146,7 @@
     
     function changeTables() {
 		document.querySelector("#tables").innerHTML =
-			'<select class="select_box" name="shop_table">' +
+			'<select class="select_box" name="shop_tables">' +
 	    	'<option value="1">1</option>' +
 	    	'<option value="2">2</option>' +
 	    	'<option value="3">3</option>' +
@@ -190,8 +190,8 @@
       
 	function readURL(input) {
 		const type = input.files[0].name.split('.');
-		if(type[1] != "jpg" && type[1] != "png" &&  type[1] != "jpeg"){
-			alert("이미지 파일은 (jpg, png, jpeg) 형식만 등록 가능합니다.");
+		if(type[1] != "jpg"){
+			alert("이미지 파일은 jpg 형식만 등록 가능합니다.");
 			document.getElementById('preview').src = "";
 			document.getElementById('img').value = null;
 			return false;

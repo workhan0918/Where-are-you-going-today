@@ -7,7 +7,6 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.varxyz.wgt.owner.doamin.Owner;
 import com.varxyz.wgt.waiting.domain.Waiting;
 
 public class WaitingDao {
@@ -50,6 +49,13 @@ public class WaitingDao {
 			Waiting error = new Waiting();
 			error.setBarName("없음");
 			error.setNum_people(0);
+			waiting.add(error);
+			return waiting;
+		}
+		if ( jdbcTemplate.query(sql, new BeanPropertyRowMapper<Waiting>(Waiting.class), userId).get(0).getWaitingStartTime() == null) {
+			List<Waiting> waiting = new ArrayList<Waiting>();
+			Waiting error = new Waiting();
+			error.setWaitingStartTime(null);
 			waiting.add(error);
 			return waiting;
 		}

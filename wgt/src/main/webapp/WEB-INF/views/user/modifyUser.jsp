@@ -16,25 +16,29 @@
 </head>
 
 <body>
-	<a class="back" href="<c:url value='/map/map'/>"><img src="resources/mapcss/img/backicon.png"></a>
 	<form action="modifyUser" method="post" enctype="multipart/form-data">
 		<c:forEach var="user" items="${userList}">
-		<div style="font-size: 100px; text-align: center; padding-top: 40px;">회원수정</div>
+		<div style="font-size: 100px; text-align: center; background: #DA0037; color: white;">회원수정</div>
 		<!-- required는 입력을 안할시 자동으로 입력하라고 알림창을 띄움 -->
 		<div style="text-align: center; padding-top: 20px; font-size: 30px;">아이디 
-		<input type="text" name="userId" value="${user.userId}" readonly></div><br> 
+		<input type="text" name="userId" value="${user.userId}" readonly
+		style="height: 25px; text-align: center;"></div><br> 
 		
 		<div style="margin-left: 55px; padding-top: 20px; font-size: 30px;">비밀번호 
-		<input type="password" name="passwd" value="${user.passwd}" required></div><br>
+		<input type="password" name="passwd" value="${user.passwd}" required
+		style="height: 25px; text-align: center;"></div><br>
 		
 		<div style="margin-left: 95px; padding-top: 20px; font-size: 30px;">이름 
-		<input type="text" name="name" value="${user.name}" required></div><br>
+		<input type="text" name="name" value="${user.name}" required
+		style="height: 25px; text-align: center;"></div><br>
 		
 		<div style="margin-left: 55px; padding-top: 20px; font-size: 30px;">주민번호 
-		<input type="text" name="ssn" value="${user.ssn}" readonly></div><br>
+		<input type="text" name="ssn" value="${user.ssn}" readonly
+		style="height: 25px; text-align: center;"></div><br>
 		
 		<div style="margin-left: 47px; padding-top: 20px; font-size: 30px;">전화번호 
-		<input type="text" name="phone" value="${user.phone}" required></div><br>
+		<input type="text" name="phone" value="${user.phone}" required
+		style="height: 25px; text-align: center;"></div><br>
 		
 		<div><input type="button" onclick="sample6_execDaumPostcode()" class="ubtn" value="우편번호 찾기"></div><br>
         <div><input type="text" name="addr1" value="${user.addr1}" id="sample6_postcode" placeholder="우편번호" style="margin-left: 55px;width: 280px;height: 20px;text-align: center;"></div><br>
@@ -44,7 +48,7 @@
 		
 		<div style="text-align: center; font-size: 30px; padding-top: 10px;">프로필 사진<br>
 		<img src="resources/user/img/${user.imgName}.jpg" id="profileImg" name="imgName" style="width: 100px; height: 100px;" /><br></div> 
-		<input type="file" multiple="multiple" accept="image/jpg, image/png" name="file" onchange="preview()" style="margin-left: 130px;padding-top: 10px;"> 
+		<input type="file" multiple="multiple" accept=".jpg, png" name="file" onchange="preview()" style="margin-left: 130px;padding-top: 10px;"> 
 		
 		<button type="submit" class="mBtn">수정완료</button>
 		<button type="button" class="mBtn" onClick="location.href='/wgt/map/map'">수정취소</button>
@@ -52,7 +56,7 @@
 	</form>
 	
 	<form action="deleteUser" method="post">
-		<button type="submit" class="dBtn">회원탈퇴</button>
+		<button type="submit" class="dBtn" style="background: gray;">회원탈퇴</button>
 	</form>
 </body>
 

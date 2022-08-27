@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div style="font-size: 80px; text-align: center; margin-top: 150px; margin-bottom: 120px;">로그아웃<br> 하시겠습니까</div>
+	<div style="font-size: 80px; text-align: center; padding-top: 150px; padding-bottom: 120px;">로그아웃<br> 하시겠습니까</div>
 	<form action="logOut" method="post">
 		<input type="submit" class="addBtn" value="예" />
 	</form>

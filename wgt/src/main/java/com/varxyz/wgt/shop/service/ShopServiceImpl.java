@@ -16,7 +16,7 @@ public class ShopServiceImpl implements ShopService {
 	ShopDao dao = context.getBean("shopDao", ShopDao.class);
 
 	@Override
-	public Shop findAllByShopName(String shopName) {
+	public List<Shop> findAllByShopName(String shopName) {
 		return dao.findAllByShopName(shopName);
 	}
 
@@ -63,5 +63,31 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public List<Shop> findAllShop() {
 		return dao.findAllShop();
+	}
+
+	// 매장 정보 매장 객체로 받아오기
+	@Override
+	public Shop findAllbyShopNameObject(String shopName) {
+		return dao.findAllByShopNameObject(shopName);
+	}
+
+	@Override
+	public List<Menu> findAllMenu() {
+		return dao.findAllMenu();
+	}
+
+	@Override
+	public List<String> findAllBns() {
+		return dao.findAllBns();
+	}
+
+	@Override
+	public boolean shopFindMenuCheck(String menuName, String bnsNum) {
+		return dao.shopFindMenuCheck(menuName, bnsNum);
+	}
+
+	@Override
+	public Shop findShopByOwnerId(String ownerId) {
+		return dao.findShopByOwnerId(ownerId);
 	}
 }

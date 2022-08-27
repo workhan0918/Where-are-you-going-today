@@ -12,7 +12,17 @@ public class MapServiceImpl implements MapService{
 	}
 
 	@Override
+	public List<Map> findBnsMap(String businessNumber) {
+		return dao.findBnsMap(businessNumber);
+	}
+
+	@Override
 	public List<Map> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public void insertPosition(Map map) {
+		dao.insertPosition(map);
 	}
 }

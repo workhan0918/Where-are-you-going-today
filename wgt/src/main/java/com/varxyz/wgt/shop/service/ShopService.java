@@ -11,7 +11,9 @@ public interface ShopService {
 	public List<Shop> findAllShop();
 	
 	// 매장명으로 매장 정보 가져오기
-	public Shop findAllByShopName(String shopName);
+	public List<Shop> findAllByShopName(String shopName);
+	
+	public Shop findAllbyShopNameObject(String shopName);
 	
 	// 매장 추가
 	public boolean addShop(Shop shop);
@@ -36,4 +38,16 @@ public interface ShopService {
 	
 	// 매장 정보 수정
 	public boolean updateShop(Shop shop, String oldImg);
+	
+	// 메뉴 정보 모두 조회
+	public List<Menu> findAllMenu();
+	
+	// 모든 사업자 번호 조회
+	public List<String> findAllBns();
+	
+	// 가게별 메뉴 이름 중복 검사
+	public boolean shopFindMenuCheck(String menuName, String bnsNum);
+	
+	// 점주 ID로 매장 검색
+	public Shop findShopByOwnerId(String ownerId);
 }

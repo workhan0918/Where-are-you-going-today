@@ -41,9 +41,8 @@ public class UserController {
 		if(fileRealName == null || fileRealName.length() == 0) {
 			
 			model.addAttribute("msg", "프로필 사진을 등록해 주세요!!");
-			model.addAttribute("url", "addUser");
 			
-			return "alert/alert";
+			return "alert/back";
 		}
 		
 		System.out.println("파일명 : " + fileRealName);

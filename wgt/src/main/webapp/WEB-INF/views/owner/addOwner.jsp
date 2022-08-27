@@ -19,7 +19,6 @@
 		<div style="text-align: center; font-size: 30px; padding-top: 80px;">아이디 <input type="text" name="ownerId" oninput="dp(this); np(this)" required style="margin-left: 20px; height: 20px;"></div><br>
 		<div style="margin-left: 45px; font-size: 30px; padding-top: 40px;">비밀번호 <input type="password" name="passwd" required style="margin-left: 20px; height: 20px;"></div><br>
 		<div style="margin-left: 86px; font-size: 30px; padding-top: 40px;">이름 <input type="text" name="name" required style="margin-left: 20px; height: 20px;"></div><br>
-		<div style="margin-left: 10px; font-size: 30px; padding-top: 40px;">사업자 번호 <input type="text" name="bnumber" required style="margin-left: 20px; height: 20px;"></div>
 		<input type="submit" value="점주가입" class="loginBtn" />
 	</form>
 	

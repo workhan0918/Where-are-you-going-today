@@ -29,7 +29,7 @@ public class WaitingServiceImpl implements WaitingService{
 
 	@Override
 	public void deteleAllWaiting(String barName) {
-		dao.deleteWaiting(barName);
+		dao.deteleAllWaiting(barName);
 	}
 
 	@Override

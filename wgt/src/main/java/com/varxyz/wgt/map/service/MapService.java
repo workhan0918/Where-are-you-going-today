@@ -15,5 +15,7 @@ public interface MapService {
 	MapDao dao = context.getBean("mapDao", MapDao.class);
 	
 	public List<Map> search(String name);
+	public List<Map> findBnsMap(String businessNumber);
 	public List<Map> findAll();
+	public void insertPosition(Map map);
 }

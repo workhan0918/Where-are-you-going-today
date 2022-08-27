@@ -27,7 +27,7 @@ public class UpdateShopController {
 	@GetMapping("shop/updateShop")
 	public String updateShopGo(Model model, Shop shop, HttpSession session) {
 		// 로그인 없이 주소로 접속시도시 예외 처리
-		String bNumber = (String)session.getAttribute("bNum");
+		String bNumber = (String)session.getAttribute("bnsNum");
 		if(bNumber == null) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			model.addAttribute("url", "../login");

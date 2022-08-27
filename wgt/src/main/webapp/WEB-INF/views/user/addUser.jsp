@@ -40,6 +40,8 @@
 		
 		<div style="text-align: center; font-size: 30px; padding-top: 10px;">프로필 사진<br> 
 		<img id="profileImg" style="width: 100px; height: 100px;"></div>
+		
+		<!-- accept는 파일 선택시 jpg를 선택할 수 있게 함 -->
 		<input type="file" multiple="multiple" accept=".jpg, png" name="file" onchange="preview()" accept="image/jpeg, image/png, image/jpg" style="margin-left: 130px; padding-top: 10px; margin-bottom: 10px;">
 		
 		<input type="submit" value="회원가입" class="btn" />

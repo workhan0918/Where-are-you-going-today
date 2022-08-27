@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.varxyz.wgt.board.domain.Board;
+import com.varxyz.wgt.board.domain.Likes;
+import com.varxyz.wgt.shop.domain.Shop;
 
 @Component("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -17,13 +19,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void create(Board board, String imgName) {
-		dao.create(board, imgName);
+	public void create(Board board, String imgName, String userId, Shop shop) {
+		dao.create(board, imgName, userId, shop);
 	}
 
 	@Override
-	public List<Board> read(Board board) {
-		return dao.read(board);
+	public List<Board> read(String businessNumber) {
+		return dao.read(businessNumber);
+	}
+	
+	@Override
+	public List<Board> readmypage(String userId) {
+		return dao.readmypage(userId);
 	}
 
 	@Override
@@ -42,14 +49,40 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Integer totalCount() throws Exception {
-		return null;
+	public Board searchByNumber(long number) {
+		return dao.searchByNumber(number);
 	}
 
 	@Override
-	public Board searchByBid(int bid) {
-		return dao.searchByBid(bid);
+	public void likeuser(Likes likes) {
+		dao.likeuser(likes);
 	}
 
+	@Override
+	public List<Likes> findLikes(String userId, long number) {
+		return dao.findLikes(userId, number);
+	}
+
+	@Override
+	public void checkUpdate(String userId, long number, String check) {
+		dao.checkUpdate(userId, number, check);
+	}
+
+	@Override
+	public void likecountPlus(int likecount, long number) {
+		dao.likecountPlus(likecount, number);
+	}
+
+	@Override
+	public void likecountDown(int likecount, long number) {
+		dao.likecountDown(likecount, number);
+	}
+
+	@Override
+	public void updateLikeImg(long number, String likeImg) {
+			dao.updateLikeImg(number, likeImg);
+	}
+
+	
 	
 }

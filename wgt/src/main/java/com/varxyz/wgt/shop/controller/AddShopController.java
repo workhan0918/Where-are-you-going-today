@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,21 +29,19 @@ public class AddShopController {
 	// 첫번째 폼
 	@GetMapping("/add_shop")
 	public String addShopGo(HttpSession session, Model model) {
-		String bNum = (String)session.getAttribute("bNum");
-		if (bNum == null) {
+		menuList.removeAll(menuList);
+		String ownerId = (String)session.getAttribute("ownerId");
+		if (ownerId == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요");
 			model.addAttribute("url", "login");
 			return "alert/alert";
 		}
 		ShopService service = new ShopServiceImpl();
-		try {
-			service.findShopByBnsNum(bNum);
+			if(service.findShopByOwnerId(ownerId).getShopName() == null) {
+				return "shop/addShop";							
+			}
+				
 			return "redirect:/shop/viewMyShop";
-		}catch (EmptyResultDataAccessException e) {
-			
-		}
-		model.addAttribute("bNum", bNum);
-		return "shop/addShop";
 	}
 	
 	@GetMapping("/add_shop2")
@@ -77,12 +74,22 @@ public class AddShopController {
 			return "alert/back";
 		}
 		
+		ShopService service = new ShopServiceImpl();
+		
+		if(service.findShopByBnsNum(bnsNum).getBusinessNumber() != null) {
+			model.addAttribute("msg", "중복된 사업자 번호입니다.");
+			return "alert/back";
+		}
+		
+		session.setAttribute("bnsNum", bnsNum);
+		
 		shop.setBusinessNumber(bnsNum);	
 		shop.setShopName(shopName);
 		shop.setShopPostCode(shopPostCode);
 		shop.setShopAddress(shopAddress);
 		shop.setShopDetailAddress(shopDetailAddress);
 		shop.setShopExtraAddress(shopExtraAddress);
+		shop.setOwnerId((String)session.getAttribute("ownerId"));
 		
 		return "shop/addShop2";
 	}
@@ -149,6 +156,7 @@ public class AddShopController {
 		// 집 경로
 //		String uploadFolder = "C:\\Users\\hanta\\Desktop\\mycoding\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\temp";
 		
+				
 		/*
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가 
 		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있다. 
@@ -254,6 +262,13 @@ public class AddShopController {
 			return "alert/back";
 		}
 		
+		for (Menu checkMenu : menuList) {
+			if(checkMenu.getMenuName().equals(menuName)) {
+				model.addAttribute("msg", "중복된 이름의 메뉴는 등록하실수 없습니다.");
+				return "alert/back";
+			}
+		}
+		
 		menu.setMenuName(menuName);
 		menu.setMenuPrice(Integer.parseInt(menuPrice));
 		menu.setMenuIntro(menuIntro);
@@ -286,7 +301,7 @@ public class AddShopController {
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가 
 		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있다. 
 		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		  고유한 랜덤 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
 		 */
 		
 		UUID uuid = UUID.randomUUID();

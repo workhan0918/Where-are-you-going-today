@@ -1,5 +1,6 @@
 package com.varxyz.wgt.shop.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class SelectShopController {
 	public String viewTempMyShop(Model model, HttpSession session) {
 		session.removeAttribute("tempImgList");
 		
-		String bNum = (String)session.getAttribute("bNum");
+		String bNum = (String)session.getAttribute("bnsNum");
 		model.addAttribute("shop", service.findShopByBnsNum(bNum));
 		model.addAttribute("menus", service.findShopMenuByBnsNum(bNum));
 		return "shop/view/viewTempMyShop";
@@ -25,16 +26,20 @@ public class SelectShopController {
 	
 	@GetMapping("shop/viewMyShop")
 	public String viewMyShop(Model model, HttpSession session) {
-		String bNum = (String)session.getAttribute("bNum");
+		String bNum = (String)session.getAttribute("bnsNum");
+		session.setAttribute("shopNameForManager", service.findShopByBnsNum(bNum).getShopName());
 		model.addAttribute("shop", service.findShopByBnsNum(bNum));
 		model.addAttribute("menus", service.findShopMenuByBnsNum(bNum));
 		return "shop/view/viewMyShop";
 	}
 	
 	@GetMapping("shop/viewUserShop")
-	public String viewUserShop(Model model, HttpSession session) {
-		model.addAttribute("shop", service.findShopByBnsNum("123-456-789"));
-		model.addAttribute("menus", service.findShopMenuByBnsNum("123-456-789"));
+	public String viewUserShop(Model model, HttpSession session, HttpServletRequest request) {
+		String bnsNum = service.findAllbyShopNameObject(request.getParameter("shopName")).getBusinessNumber();
+		session.setAttribute("bnsNum", bnsNum);
+		session.setAttribute("shopName", request.getParameter("shopName"));
+		model.addAttribute("shop", service.findShopByBnsNum(bnsNum));
+		model.addAttribute("menus", service.findShopMenuByBnsNum(bnsNum));
 		return "shop/view/viewUserShop";
 	}
 }

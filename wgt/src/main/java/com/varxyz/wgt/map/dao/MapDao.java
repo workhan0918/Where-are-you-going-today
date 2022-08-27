@@ -14,18 +14,24 @@ public class MapDao {
 	public MapDao(DataSource dataSourceConfig) {
 		jdbcTemplate = new JdbcTemplate(dataSourceConfig);
 	}
-//	public List<Map> search(String name) {
-//		String sql = "SELECT * FROM test WHERE name = ?";
-//		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Map>(Map.class), name);
-//	}
 	
-	public List<Map> findAll(){
-		String sql = "SELECT * FROM test";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Map>(Map.class));
+	public List<Map> findBnsMap(String businessNumber){
+		String sql = "SELECT longitude, latitude FROM map ORDER BY mid ASC ";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Map>(Map.class), businessNumber);
 	}
 	
 	public List<Map> search(String name){
-		String sql = "SELECT * FROM test WHERE name like '%" + name +"%' ";
+		String sql = "SELECT * FROM map WHERE name like '%" + name +"%' ";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Map>(Map.class));
+	}
+	
+	public List<Map> findAll(){
+		String sql = "SELECT * FROM map ORDER BY businessNumber ASC";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Map>(Map.class));
+	}
+	
+	public void insertPosition(Map map) {
+		String sql = "INSERT INTO map (businessNumber, longitude, latitude) VALUES( ? ,? ,? )";
+		jdbcTemplate.update(sql,map.getBusinessNumber(), map.getLongitude(), map.getLatitude());
 	}
 }

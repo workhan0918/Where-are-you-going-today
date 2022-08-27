@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.varxyz.wgt.map.domain.Map;
 import com.varxyz.wgt.shop.domain.Menu;
 import com.varxyz.wgt.shop.domain.MenuCommand;
 import com.varxyz.wgt.shop.domain.Shop;
@@ -23,25 +23,25 @@ private JdbcTemplate jdbcTemplate;
 	}
 	
 	// 매장명으로 매장 정보 가져오기
-	public Shop findAllByShopName(String shopName){
+	public List<Shop> findAllByShopName(String shopName){
 		String sql = "SELECT * FROM shop WHERE shopName = ?";
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Shop>(Shop.class), shopName);
-		/*
-		 * try { return jdbcTemplate.queryForObject(sql, new
-		 * BeanPropertyRowMapper<Shop>(Shop.class), shopName); } catch (Exception e) {
-		 * return null; }
-		 */
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Shop>(Shop.class), shopName);
 	}
 	
+	// 매장명으로 매장 정보 가져오기
+	public Shop findAllByShopNameObject(String shopName){
+		String sql = "SELECT * FROM shop WHERE shopName = ?";
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Shop>(Shop.class), shopName);
+	}
 	// 매장 추가
 	public boolean addShop(Shop shop) {
 		String sql = "INSERT INTO SHOP (businessNumber, shopName, shopTel, shopPostCode, shopAddress, "
-				+ " shopDetailAddress, shopExtraAddress, shopHours, shopTables, shopMaxPeoples, shopImg) "
-				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " shopDetailAddress, shopExtraAddress, shopHours, shopTables, shopMaxPeoples, shopImg, ownerId) "
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, shop.getBusinessNumber(), shop.getShopName(), shop.getShopTel(),
 								shop.getShopPostCode(), shop.getShopAddress(), shop.getShopDetailAddress(),
 								shop.getShopExtraAddress(), shop.getShopHours(), shop.getShopTables(), 
-								shop.getShopMaxPeoples(), shop.getShopImg());
+								shop.getShopMaxPeoples(), shop.getShopImg(), shop.getOwnerId());
 		return true;
 	}
 	
@@ -57,7 +57,13 @@ private JdbcTemplate jdbcTemplate;
 	// 사업자 번호로 매장 검색
 	public Shop findShopByBnsNum(String bnsNum) {
 		String sql = "SELECT * FROM shop WHERE businessNumber = ?";
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Shop>(Shop.class), bnsNum);
+		Shop shop = new Shop();
+		try {
+			shop = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Shop>(Shop.class), bnsNum);
+		}catch (EmptyResultDataAccessException e) {			
+			return shop;
+		}
+		return shop;
 	}
 	
 	// 사업자 번호로 매장 메뉴 전체 검색
@@ -75,7 +81,7 @@ private JdbcTemplate jdbcTemplate;
 	// 매장 메뉴 수정
 	public boolean updateShopMenu(MenuCommand updatedMenu, Menu oldMenu) {
 		String sql = "UPDATE menu SET menuName=?, menuIntro=?, menuPrice=?, menuImg=? "
-				+ " WHERE MENU_NAME = ?";
+				+ " WHERE menuName = ?";
 		jdbcTemplate.update(sql, updatedMenu.getMenuName(), updatedMenu.getMenuIntro(), 
 								 updatedMenu.getMenuPrice(), updatedMenu.getMenuImg(), oldMenu.getMenuName());
 		File file = new File("C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\shop\\menu_img\\" + oldMenu.getMenuImg() + ".jpg");
@@ -110,9 +116,43 @@ private JdbcTemplate jdbcTemplate;
 		return true;
 	}
 	
+	
 	// 모든 매장 정보 불러오기
 	public List<Shop> findAllShop() {
 		String sql ="SELECT * FROM shop";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Shop>(Shop.class));
+	}
+
+	public List<Menu> findAllMenu() {
+		String sql ="SELECT * FROM menu";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Menu>(Menu.class));
+	}
+
+	public List<String> findAllBns() {
+		String sql ="SELECT businessNumber FROM menu";
+		List<String> data = jdbcTemplate.queryForList(sql ,String.class);
+		return data;
+	}
+	
+	// 메뉴 중복 검사
+	public boolean shopFindMenuCheck(String menuName, String bnsNum) {
+		String sql = "SELECT * FROM menu WHERE menuName = ? AND businessNumber = ?";
+		try {
+			jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Menu>(Menu.class), menuName, bnsNum);			
+		}catch (EmptyResultDataAccessException e) {
+			return true;
+		}
+		return false;
+	}
+
+	public Shop findShopByOwnerId(String ownerId) {
+		String sql = "SELECT * FROM shop WHERE ownerId = ?";
+		Shop shop = new Shop();
+		try {
+			shop = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Shop>(Shop.class), ownerId);
+		}catch (EmptyResultDataAccessException e) {
+			return shop;
+		}
+		return shop;
 	}
 }
