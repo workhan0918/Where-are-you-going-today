@@ -1,5 +1,5 @@
 # Where-are-you-going-today
-가게 온라인 웨이팅 예약 프로젝트
+가게 온라인 웨이팅 예약 및 소규모 SNS를 구현한 프로젝트입니다. 모바일 어플 컨셉으로 제작하게 되었습니다!
 
 # 개발 개요
 
@@ -13,8 +13,67 @@
 
 물어보는것도 상당히 번거롭습니다. 그래서 저희는 이러한 불편함을 해결 하기 위해 온라인 웨이팅 프로젝트를 개발하게 되었습니다.
 
+# 개발 환경
+
+* 개발 기간 : 2022.08.08 ~ 2022.08.22
+
+* 개발 인원 : 5명 ( 팀 프로젝트 )
+
+* 사용 기술
+
+   * Html5, CSS3, JavaScript
+   * KAKAO API
+   * Java 11
+   * JSP / JSTL
+   * Java Spring 3.9
+   * MVC Pattern
+   * Apache Tomcat 8.5
+   * MySQL DataBase 8.0.29
+   
+* 사용 IDE
+     * Eclipse
+     * Atom
+     
+# 구현 내용
+
+* 로그인 관련
+   * [유저/점주 회원가입](#회원-가입)
+   * [유저/점주 로그인/로그아웃](#로그인/로그아웃)
+   * [회원정보 수정](#회원정보-수정)
+   * [회원 탈퇴](#회원-탈퇴)
+   
+* 웨이팅 관련
+  * [가게 웨이팅 예약](#가게-웨이팅-예약)
+  * [가게 웨이팅 취소](#가게-웨이팅-취소)
+  * [현재 가게 웨이팅 내역 조회](#가게-웨이팅-조회)
+  * [현재 실시간 대기 인원 조회](#가게-대기인원-조회)
+  * [점주측에서 웨이팅 일괄 삭제](#웨이팅-삭제)
+  * [체크인 미확인시 자동 예약 취소](#자동-예약취소)
+  
+* 가게 관련 ( 담당 업무 )
+  * [가게 등록](#가게-등록)
+  * [자신의 가게 조회](#가게-조회)
+  * [가게 정보 수정](#가게-정보-수정)
+  * [메뉴 등록](#메뉴-등록)
+  * [메뉴 수정](#메뉴-수정)
+  * [메뉴 삭제](#메뉴-삭제)
+  
+* SNS 관련
+  * 게시글 작성(#게시글-작성)
+  * 게시글 수정(#게시글-수정)
+  * 게시글 삭제(#게시글-삭제)
+  * 게시글 검색(#게시글-검색)
+
+* 지도(메인페이지)관련
+  * 카카오API를 사용하여 지도 구현
+  * 지도상의 키워드 검색으로 가게 검색
+  * 키워드 검색시 가게정보,위치 및 메뉴정보 조회
+  * 관리자 페이지 구현 ( 위도 , 경도 설정 )
+  
 
 # 가게 등록
+
+제가 담당하게된 업무 입니다.
 
 * 첫번째 폼
 
@@ -45,5 +104,50 @@
 
 * 세번째 폼
 
+이 폼에서는 가게의 이미지를 점주가 업로드하게 됩니다. 이때 점주가 이미지 등록도중 취소를 할 수 도 있기 때문에 우선 서버의 임시 폴더로 이미지를 업로드하게 됩니다. 
+
+업로드 할때 이미지 명이 겹칠 수 있는것을 생각해 UUID를 사용하여 랜덤 고유 식별값으로 이름을 지정해주어 업로드 하게 됩니다. 
+
+최종적으로 가게 등록까지 완료 할 시 서버의 임시 폴더에서 실제 상점 이미지들이 보관되는 폴더로 이미지가 이동이 되게 구현을 하였습니다.
+
+업로드를 하고 구현해놓은 취소 버튼을 누르면 로그인페이지로 이동하며 업로드했던 이미지들은 temp에서 모두 지워지게 구현하였습니다.
+
+서버temp 누르지않고 사용자가 임의로 인터넷창을 꺼버리는등의 동작을 하였을때 서버 임시폴더안에 있는 이미지들이 그대로 남게되는 문제가 발생하였는데 아직
+
+그것에 대한 데이터 처리를 하지 못한게 아쉬운 기능입니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/187578180-5f8e9f06-646e-4342-98a5-f6946f1beec2.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173222-882e1041-b7dc-4416-a024-aff6fa2b136f.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173242-fbe95d91-3354-4e97-955e-483bdcf04695.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173258-94847106-04a4-49ca-aa64-52b387986954.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173270-a69a381e-6992-4857-aa6f-05a63cfebd8a.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173288-9dceed1b-faab-4afa-b12f-42c22ae63c24.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173303-fcd242a2-123f-4481-9fa7-547473789fe4.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173320-19561ce9-137c-4a7a-97db-3d0727d7ae39.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173336-d871729b-2fcd-4b39-ba44-6be47c7ec087.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173354-a6ef423f-3805-4aa6-9675-a3adca81f1c5.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173364-081e95be-dd24-4215-8dd7-8d1905d34fd1.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173389-20980e1f-6b1c-4d75-b5bf-4b75fc45c19d.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173402-def92837-6544-4886-b87d-d356876ad456.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188173415-08111075-c210-4280-9918-75968e262725.png)
+
+
+
+
+
+
+
 
