@@ -118,23 +118,49 @@
 
 ![image](https://user-images.githubusercontent.com/100820039/187578180-5f8e9f06-646e-4342-98a5-f6946f1beec2.png)
 
+이미지 업로드시 모든 확장자로 원래는 올릴 수 있게 됐는데 input의 accept 기능을 활용하여 .jpg파일만 업로드 할 수 있게 구현하였습니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173222-882e1041-b7dc-4416-a024-aff6fa2b136f.png)
 
 ![image](https://user-images.githubusercontent.com/100820039/188173242-fbe95d91-3354-4e97-955e-483bdcf04695.png)
 
+# 메뉴 등록
+
+가게 이미지를 업로드 후에 메뉴 등록을 할 수 있게 구현 하였습니다. 메뉴의 정보를 간단히 받고 다음 버튼을 누르면 계속해서 메뉴를 등록 할 수 있으며 
+
+최대 10개까지 등록 할 수 있게 구현했습니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173258-94847106-04a4-49ca-aa64-52b387986954.png)
+
+컨트롤러에서 올린 메뉴를 리스트에 저장하여 현재 올린 메뉴를 리스트에 담고 그 길이를 보여주어 현재까지 등록한 메뉴가 몇개인지 알려주게끔 구현하였습니다.
+
+또한 여기서 메뉴를 등록한다고 바로 DB에 저장되는것이 아닌 메뉴를 10개 등록하거나 '여기까지만 등록하기' 버튼을 누르면 최종적으로 가게 등록이 완료되어 이때
+
+DB에 값을 저장하게 하여 필요없는 쿼리전송을 제한하였습니다.
 
 ![image](https://user-images.githubusercontent.com/100820039/188173270-a69a381e-6992-4857-aa6f-05a63cfebd8a.png)
 
 ![image](https://user-images.githubusercontent.com/100820039/188173288-9dceed1b-faab-4afa-b12f-42c22ae63c24.png)
 
+가게를 성공적으로 등록하게 되면 간단히 자신의 가게 정보를 보여주고 홈으로 돌아가기를 누르면 가게의 정보를 조회,수정 메뉴 추가, 수정, 삭제 할 수 있는
+
+점주의 메인페이지로 가게 됩니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173303-fcd242a2-123f-4481-9fa7-547473789fe4.png)
 
 ![image](https://user-images.githubusercontent.com/100820039/188173320-19561ce9-137c-4a7a-97db-3d0727d7ae39.png)
 
+# 가게 조회
+
+점주로 로그인했을 때 자신의 가게가 등록되어있으면 오게되는 메인 페이지입니다. 로그인시 점주의 ID를 session으로 받아와 점주의 ID로 Controller에서
+
+그 ID의 점주의 가게가 있는지 검색 후 (DB와 통신) 가게가 있다면 그 정보를 모두 가져와 이 페이지로 정보를 보내주게 구현했습니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173336-d871729b-2fcd-4b39-ba44-6be47c7ec087.png)
 
 ![image](https://user-images.githubusercontent.com/100820039/188173354-a6ef423f-3805-4aa6-9675-a3adca81f1c5.png)
+
+# 가게 정보 수정
 
 ![image](https://user-images.githubusercontent.com/100820039/188173364-081e95be-dd24-4215-8dd7-8d1905d34fd1.png)
 
