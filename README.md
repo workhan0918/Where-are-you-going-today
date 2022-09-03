@@ -162,11 +162,25 @@ DB에 값을 저장하게 하여 필요없는 쿼리전송을 제한하였습니
 
 # 가게 정보 수정
 
+가게 정보 수정 시 사업자번호, 매장 이름 외에 모든 정보를 수정 할 수 있습니다.
+
+수정하고 싶은 정보를 클릭 시 자바스크립트를 이용하여 input 태그로 변경되게 하여 수정할 정보를 입력 할 수 있게 구현 하였습니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173364-081e95be-dd24-4215-8dd7-8d1905d34fd1.png)
 
 ![image](https://user-images.githubusercontent.com/100820039/188173389-20980e1f-6b1c-4d75-b5bf-4b75fc45c19d.png)
 
+# 메뉴 삭제
+
+메뉴 삭제시 삭제하고 싶은 메뉴 옆에 있는 체크박스를 클릭하여 삭제 할 수 있습니다. 삭제하고 싶은 메뉴 여러개를 한번에 삭제 할 수 있으며
+
+삭제할 정보를 Controller에서 List로 받아서 List 사이즈 만큼 foreach문으로 삭제 하게 구현하였습니다.
+
 ![image](https://user-images.githubusercontent.com/100820039/188173402-def92837-6544-4886-b87d-d356876ad456.png)
+
+# 메뉴 수정
+
+메뉴 수정 기능입니다. 옆에 있는 수정 버튼을 눌러 메뉴를 수정할 수 있게 구현 하였습니다.
 
 ![image](https://user-images.githubusercontent.com/100820039/188173415-08111075-c210-4280-9918-75968e262725.png)
 
