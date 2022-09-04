@@ -38,7 +38,7 @@
 
 * 로그인 관련
    * [유저/점주 회원가입](#회원-가입)
-   * [유저/점주 로그인/로그아웃](#로그인/로그아웃)
+   * [유저/점주 로그인/로그아웃](#로그인-로그아웃)
    * [회원정보 수정](#회원정보-수정)
    * [회원 탈퇴](#회원-탈퇴)
    
@@ -59,17 +59,62 @@
   * [메뉴 삭제](#메뉴-삭제)
   
 * SNS 관련
-  * 게시글 작성(#게시글-작성)
-  * 게시글 수정(#게시글-수정)
-  * 게시글 삭제(#게시글-삭제)
-  * 게시글 검색(#게시글-검색)
+  * [게시글 작성](#게시글-작성)
+  * [게시글 수정](#게시글-수정)
+  * [게시글 삭제](#게시글-삭제)
+  * [게시글 검색](#게시글-검색)
 
 * 지도(메인페이지)관련
-  * 카카오API를 사용하여 지도 구현
-  * 지도상의 키워드 검색으로 가게 검색
-  * 키워드 검색시 가게정보,위치 및 메뉴정보 조회
-  * 관리자 페이지 구현 ( 위도 , 경도 설정 )
-  
+  * [카카오API를 사용하여 지도 구현](#지도)
+  * [지도상의 키워드 검색으로 가게 검색](#가게-검색)
+  * [키워드 검색시 가게정보,위치 및 메뉴정보 조회](#지도에서-가게조회)
+  * [관리자 페이지 구현 ( 위도 , 경도 설정 )](#관리자-페이지)
+
+# 구현 
+
+# 회원 가입
+
+![image](https://user-images.githubusercontent.com/100820039/188295250-54de76e0-784e-4cc5-8746-ed9603ce2f5b.png)
+
+우편번호 찾기는 KAKAO API를 사용하였습니다.
+
+# 로그인 로그아웃
+
+![image](https://user-images.githubusercontent.com/100820039/188295234-11ee0c3a-f9e4-4397-b697-be6190da5d19.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188295242-23a35ff7-5610-47c3-a717-6e4ac31d8b4f.png)
+
+# 회원정보 수정
+
+![image](https://user-images.githubusercontent.com/100820039/188295296-1c1cb52b-f48c-4a5b-b550-68a096d1cd10.png)
+
+
+# 회원 탈퇴
+
+# 가게 웨이팅 예약
+
+![image](https://user-images.githubusercontent.com/100820039/188295310-b5dc32dd-1058-4cfa-a78f-038fb0b1ffe2.png)
+
+
+# 가게 웨이팅 취소
+
+# 가게 웨이팅 조회
+
+![image](https://user-images.githubusercontent.com/100820039/188295284-916a69cd-da2f-4afe-b8da-e515b7317cc8.png)
+
+매장 점주가 보게되는 웨이팅 조회
+
+![image](https://user-images.githubusercontent.com/100820039/188295294-46b55fc3-020f-4677-8b1d-a35c17331f8f.png)
+
+
+# 가게 대기인원 조회
+
+![image](https://user-images.githubusercontent.com/100820039/188295304-4b7cb06b-40ba-4ad4-81a3-01c457617417.png)
+
+
+# 웨이팅 삭제
+
+# 자동 예약 취소
 
 # 가게 등록
 
@@ -142,6 +187,121 @@ DB에 값을 저장하게 하여 필요없는 쿼리전송을 제한하였습니
 
 ![image](https://user-images.githubusercontent.com/100820039/188173288-9dceed1b-faab-4afa-b12f-42c22ae63c24.png)
 
+AddShopController 중 일부분
+```Java
+Menu menu = new Menu();
+		
+		// 빈값 입력시 예외 처리
+		if(menuName.trim().isEmpty() ||
+		   menuPrice.trim().isEmpty() ||
+		   menuIntro.trim().isEmpty())
+		   {
+		
+			model.addAttribute("msg", "빈값은 입력하실 수 없습니다!");
+			return "alert/back";
+		}
+		
+		for (Menu checkMenu : menuList) {
+			if(checkMenu.getMenuName().equals(menuName)) {
+				model.addAttribute("msg", "중복된 이름의 메뉴는 등록하실수 없습니다.");
+				return "alert/back";
+			}
+		}
+		
+		menu.setMenuName(menuName);
+		menu.setMenuPrice(Integer.parseInt(menuPrice));
+		menu.setMenuIntro(menuIntro);
+		menu.setBusinessNumber(shop.getBusinessNumber());
+		
+		String fileRealName = file.getOriginalFilename(); // 실제 파일 명을 알수있는 메소드
+		long size = file.getSize(); // 파일 사이즈
+		
+		// 사용자가 이미지를 업로드 하지 않았을 경우 예외 처리
+		if (fileRealName == null || fileRealName.length() == 0) {
+			menuList.add(menu);
+			model.addAttribute("msg","메뉴 사진을 등록해주세요!");
+			return "alert/back";
+		}
+		
+		System.out.println("파일명 : " + fileRealName);
+		System.out.println("용량 크기(byte) : " + size);
+		//서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+		
+		String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+		
+		// resources에 temp 폴더 절대 경로 입력 String uploadFolder = "";  
+		// 점주가 등록 취소 할 수 있기때문에 우선은 temp폴더에 임시 저장
+		String uploadFolder = "C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\temp";
+		
+		
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가 
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있다. 
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜덤 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+		
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid.toString());
+		String[] uuids = uuid.toString().split("-");
+		
+		String uniqueName = uuids[0];
+		System.out.println("생성된 고유 문자열 : " + uniqueName );
+		// 등록 도중 등록 취소시 map/map으로 이동 후에 temp에 올렸던 것들 전부 삭제를 위한 세션 생성
+		tempImgList.add(uniqueName);
+		session.setAttribute("tempImgList", tempImgList);
+		menu.setMenuImg(uniqueName);
+		System.out.println("확장자명 : " + fileExtension);
+		// File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+		File saveFile = new File(uploadFolder + "\\" + uniqueName + fileExtension); // 적용 후
+		
+		try {
+			file.transferTo(saveFile); // 실제 파일 저장메소드(filewriter 작업을 손쉽게 한방에 처리해준다.
+		}catch (IllegalStateException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		// 올릴 수 있는 최대 메뉴 사이즈 현재 10개.
+		if (menuList.size() > 9) {
+			menuList.add(menu);
+			ShopService service = new ShopServiceImpl();
+			service.addShop(shop);
+			for (Menu menuItem : menuList) {
+				service.addMenu(menuItem);
+			}
+			for (String img : (List<String>)session.getAttribute("tempImgList")) {
+				File tempImg = new File("C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\temp\\" + img + ".jpg");
+				File newImg = new File("C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\shop\\menu_img\\" + img + ".jpg");
+				
+				try {
+					FileUtils.moveFile(tempImg, newImg);
+				}catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			session.removeAttribute("tempImgList");
+			String img = (String)session.getAttribute("tempShopImg");
+			File tempImg = new File("C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\temp\\" + img + ".jpg");
+			File newImg = new File("C:\\wgt\\Where-are-you-going-today\\wgt\\src\\main\\webapp\\resources\\shop\\shop_Img\\" + img + ".jpg");
+			
+			try {
+				FileUtils.moveFile(tempImg, newImg);
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+			session.removeAttribute("tempShopImg");
+			return "shop/addShop5";
+		}else {
+			menuList.add(menu);
+			model.addAttribute("menuListSize", menuList.size());
+		}
+		
+		return "shop/addShop4";
+		
+	}
+```
+
 가게를 성공적으로 등록하게 되면 간단히 자신의 가게 정보를 보여주고 홈으로 돌아가기를 누르면 가게의 정보를 조회,수정 메뉴 추가, 수정, 삭제 할 수 있는
 
 점주의 메인페이지로 가게 됩니다.
@@ -184,8 +344,116 @@ DB에 값을 저장하게 하여 필요없는 쿼리전송을 제한하였습니
 
 ![image](https://user-images.githubusercontent.com/100820039/188173415-08111075-c210-4280-9918-75968e262725.png)
 
+# 게시글 작성
+
+![image](https://user-images.githubusercontent.com/100820039/188295360-20cef29a-ac52-4d5b-ae91-fb7b9a07827e.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188295363-c70b049f-0a5a-4d76-8146-848db523336e.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188295366-8bdc5261-2938-4823-9f1e-f7156d190a0f.png)
+
+# 게시글 수정
+
+![image](https://user-images.githubusercontent.com/100820039/188295427-521b0456-cb76-4e2d-9e84-23017409e7ec.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188295447-51829cbc-a5e6-4a24-84e7-1cbacb23173a.png)
+
+ 
+# 게시글 삭제
+
+# 게시글 검색
+
+# 게시글 좋아요
+
+게시글 좋아요 기능
+
+DB에 좋아요 테이블을 만들고 눌려졌는지 체크하는 likeCheck 열 만들어 true, false로 구분하였습니다.
+
+좋아요 클릭 시 false 라면 true 로 바꿔줌과 동시에 게시글 총 좋아요 개수를 1 더하여 업데이트 해주었습니다.
+
+A 아이디로 좋아요를 눌러둔 상태에서 B가 로그인 했을 때, 좋아요가 눌러져있는 상황에 어려움을 겪었습니다.
+
+우선, controller에서 Like테이블의 likeCheck를 이용하여 for문과 if문을 사용해서 false인지 true인지 확인하였습니다.
+
+false라면 게시글의 좋아요 이미지 모두를 흰색하트로 변경하는 작업을 추가하면서 해결할 수 있었습니다. (true 라면 반대로 빨간하트 추가)
+
+```Java
+       BoardController 일부
+
+       @GetMapping("/board/home")
+       public String list(HttpSession session, Model model, Board board) {
+         String userId = (String) session.getAttribute("userId");
+         if (session.getAttribute("userId") == null) {
+           model.addAttribute("msg", "로그인이 필요한 서비스 입니다.");
+           model.addAttribute("url", "../login");
+           return "alert/alert";
+         }
+
+         for (int i = 0; i < service.read(board).size(); i++) {
+           long boardNum = service.read(board).get(i).getNumber();
+
+           if ( service.findLikes(userId, boardNum).get(0).getLikeCheck().equals("false") ) {
+             service.updateLikeImg(boardNum, "dislikeheart");
+           }else {
+             service.updateLikeImg(boardNum, "likeheart");
+           }
+         }
+
+         model.addAttribute("board", service.read(board));
+
+         return "board/home";
+       }
+
+       @GetMapping("/board/likes")
+       public String getLikes(HttpSession session, Model model, Board board) {
+         String userId = (String) session.getAttribute("userId");
+
+         if (session.getAttribute("userId") == null) {
+           model.addAttribute("msg", "로그인이 필요한 서비스 입니다.");
+           model.addAttribute("url", "../login");
+           return "alert/alert";
+         }
 
 
+         // 만약 Likes 테이블에 id, number가 동일한 정보가 없으면 만들어주기 아니면 밑에꺼 실행 
+         if ( service.findLikes(userId, board.getNumber()).get(0).getUserId().equals("없음")
+             && service.findLikes(userId, board.getNumber()).get(0).getNumber() == -1 ) {
+           Likes likes = new Likes();
+           String result = "false";
+           likes.setUserId(userId);
+           likes.setLikeCheck(result);
+           likes.setNumber(board.getNumber());
+           service.likeuser(likes);
+           service.checkUpdate(userId, board.getNumber(), "true");
+           service.likecountPlus(board.getLikecount(), board.getNumber());
+           service.updateLikeImg(board.getNumber(), "likeheart");
+         }else { // DB에 아이디랑 게시글번호가 동일한 정보가 있다면 true, false를 비교한다
+           if(service.findLikes(userId, board.getNumber()).get(0).getLikeCheck().equals("false")) { // 좋아요를 누르지 않은 상태태
+             service.checkUpdate(userId, board.getNumber(), "true");
+             service.likecountPlus(board.getLikecount(), board.getNumber());
+             service.updateLikeImg(board.getNumber(), "likeheart");
+           }else {
+             service.checkUpdate(userId, board.getNumber(), "false");
+             service.likecountDown(board.getLikecount(), board.getNumber());
+             service.updateLikeImg(board.getNumber(), "dislikeheart");
+           }
+         }
+
+         return "redirect:/board/home";
+       }
+```
+# 지도
+
+![image](https://user-images.githubusercontent.com/100820039/188295268-50826e4f-625a-4e86-aa6a-30dd5238d2a5.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188295272-4eadbe0e-2138-4cd9-adf0-98d512417bb1.png)
+
+# 가게 검색
+
+![image](https://user-images.githubusercontent.com/100820039/188295358-2d591471-c083-4d50-af6a-be8ef3f0ef8b.png)
+
+
+# 관리자 페이지
 
 
 
