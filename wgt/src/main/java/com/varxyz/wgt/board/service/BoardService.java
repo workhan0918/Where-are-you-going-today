@@ -37,7 +37,7 @@ public interface BoardService {
 		public int delete(int number, String imgname);
 
 		// 게시글 검색
-		public List<Board> search(String title);
+		public List<Board> search(String title, String bnsNum);
 		
 		// 게시물 정보
 		public Board searchByNumber(long number);

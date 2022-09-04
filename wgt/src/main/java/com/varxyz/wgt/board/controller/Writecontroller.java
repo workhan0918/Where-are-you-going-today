@@ -35,6 +35,8 @@ public class Writecontroller {
 			model.addAttribute("url", "../login");
 			return "alert/alert";
 		}
+		String bnsNum = (String) session.getAttribute("bnsNum");
+		model.addAttribute("shop", service2.findShopByBnsNum(bnsNum).getShopName()); // 상점명 불러오기
 		return "/board/write";
 	}
 

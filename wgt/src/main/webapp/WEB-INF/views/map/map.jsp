@@ -18,56 +18,46 @@
 </head>
 
 <body id="body">
-	<script>
-		function submit_form() {
-			document.getElementById('submitID').submit();
-
-		}
-	</script>
-	<!--검색어 입력에 맞는 주소로 이동.-->
 	<input id="inputaddr" value="${addr}" style="display: none;" />
-	<nav id=gnb>
-		<ul>
-			<li class="sub1"><span>${userId}님<br> 반가워요 !
-			</span></li>
-			<hr
-				style="border: none; background-color: #DA0037; margin-bottom: 20px; height: 2px; width: 200px;">
-			<li class="sub2">
-				<form id="submitID" action="go_get_waiting" method="post">
-					<a onclick="submit_form()">나의 웨이팅</a>
-				</form>
-			</li>
-			<li class="sub3"><a onclick="location.href='/wgt/userInfo';">회원정보
-					보기</a></li>
-			<li class="sub4"><a onclick="location.href='/wgt/logOut';">로그아웃</a>
-			</li>
-		</ul>
-	</nav>
 	<div class="header_form">
 		<form action="map" method="post">
 			<div class=headerMenu>
 				<ul>
-					<li><a class="back" href="<c:url value='/login'/>"><img
+					<li class="headerMenuli"><a class="back"
+						href="<c:url value='/login'/>"><img
 							src="../resources/mapcss/img/backicon.png"></a></li>
 					<!--검색어 입력창-->
-					<li><input onkeyup="filter()" id="inputSearch"
-						class="inputtext" type="text" value="" required></li>
+					<li class="headerMenuli"><input onkeyup="filter()"
+						id="inputSearch" class="inputtext" type="text" value="" required></li>
 					<li><jsp:include page="../incl/button.jsp">
-        				 <jsp:param name="subtitle"
-            			value="<%=URLEncoder.encode(\"map: map.jsp\", \"UTF-8\")%>" />
-      					</jsp:include>
-      				</li>
+							<jsp:param name="subtitle"
+								value="<%=URLEncoder.encode(\"map: button.jsp\", \"UTF-8\")%>" />
+						</jsp:include></li>
 				</ul>
 			</div>
 			<div class="click"
-				style="top: 75px; height: 96px; width: 100%; position: relative;">
+				style="top: 54px; height: 96px; width: 100%; position: absolute;">
+				<img src="../resources/mapcss/img/logo.png">
 			</div>
 			<%
 			// 스크립트 반복문 사용을 위한 count 선언
 			int count = 0;
 			%>
 			<div id="map" onclick=" filterEvent()"
-				style=" top:98px; width: 370px; height: 650px; margin-left: 10px;"></div>
+				style="top: 150px; width: 370px; height: 622px; margin-left: 10px;"></div>
+			<div class="custom_typecontrol radius_border">
+				<span id="btnRoadmap" class="selected_btn"
+					onclick="setMapType('roadmap')">지도</span> <span id="btnSkyview"
+					class="btn" onclick="setMapType('skyview')">스카이뷰</span>
+			</div>
+			<!-- 지도 확대, 축소 컨트롤 div 입니다 -->
+			<div class="custom_zoomcontrol radius_border">
+				<span onclick="zoomIn()"><img
+					src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
+					alt="확대"></span> <span onclick="zoomOut()"><img
+					src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
+					alt="축소"></span>
+			</div>
 			<script type="text/javascript"
 				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5b341178fe09d0d9b1f0550b3aa199be&libraries=services"></script>
 			<div class="map_wrap">
@@ -121,34 +111,14 @@
 		</form>
 	</div>
 	<script>
-		const bodyClick = document.querySelector(".click")
-		const bodytoggle = document.querySelector(".header_form")
-		const gnbBtn = document.querySelector("#gnb")
-		const toggleBtn = document.querySelector(".userInformation")
-		
 		const count = document.getElementById("count").value
+		const bodyClick = document.querySelector(".click")
 		const searchbtn = document.querySelector(".searchbtn")
 		const shopName = document.querySelector(".shop")
 		const filteritemClose = document.querySelector(".item")
 		const filterClose = document.querySelector("#menu_wrap")
 		const line = document.querySelector(".line")
 		var mapClick = document.getElementById('map')
-
-		function onClicksubMit() {
-			bodytoggle.submit(event.target.value);
-		}
-
-		function toggleHandler() {
-			toggleBtn.classList.toggle("open")
-			gnbBtn.classList.toggle("on")
-			bodytoggle.classList.toggle("on")
-		}
-
-		function removeOn() {
-			bodytoggle.classList.remove("on")
-			toggleBtn.classList.remove("open")
-			gnbBtn.classList.remove("on")
-		}
 
 		function filterEvent() {
 			filterClose.style.opacity = "0";
@@ -158,9 +128,6 @@
 		}
 
 		mapClick.addEventListener("click", filterEvent);
-
-		toggleBtn.addEventListener("click", toggleHandler);
-		
 		mapClick.addEventListener("click", removeOn);
 		bodyClick.addEventListener("click", removeOn);
 
@@ -232,7 +199,7 @@
 
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = {
-			center : new kakao.maps.LatLng(35.8704973, 128.5953778), // 지도의 중심좌표
+			center : new kakao.maps.LatLng(35.8698526, 128.5977784), // 지도의 중심좌표
 			level : 4
 		// 지도의 확대 레벨
 		};
@@ -364,20 +331,29 @@
 				}
 			})
 		}
-		var geocoder = new kakao.maps.services.Geocoder();
-		geocoder.addressSearch(document.getElementById("inputaddr").value,
-				function(result, status) {
+		function setMapType(maptype) {
+			var roadmapControl = document.getElementById('btnRoadmap');
+			var skyviewControl = document.getElementById('btnSkyview');
+			if (maptype === 'roadmap') {
+				map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+				roadmapControl.className = 'selected_btn';
+				skyviewControl.className = 'btn';
+			} else {
+				map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+				skyviewControl.className = 'selected_btn';
+				roadmapControl.className = 'btn';
+			}
+		}
 
-					// 정상적으로 검색이 완료됐으면 
-					if (status === kakao.maps.services.Status.OK) {
+		// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomIn() {
+			map.setLevel(map.getLevel() - 1);
+		}
 
-						var coords = new kakao.maps.LatLng(result[0].y,
-								result[0].x);
-
-						// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-						map.setCenter(coords);
-					}
-				});
+		// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomOut() {
+			map.setLevel(map.getLevel() + 1);
+		}
 	</script>
 
 </body>

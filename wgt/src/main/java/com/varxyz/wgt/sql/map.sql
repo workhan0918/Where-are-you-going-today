@@ -22,6 +22,6 @@ INSERT INTO map VALUES(mid, "647-32-81955",35.8727425, 128.5984543);
 SELECT * FROM map;
 DROP TABLE map
 SELECT * FROM map WHERE name like '%영희%'
-
+DELETE FROM map WHERE businessNumber = "990-12-09175"
 SELECT mid, longitude, latitude FROM map ORDER BY mid ASC
 

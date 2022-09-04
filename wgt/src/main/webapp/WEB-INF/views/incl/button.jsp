@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8" import="java.util.List, java.net.URLEncoder"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.net.URLDecoder"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
@@ -20,11 +21,12 @@
 			<hr style="border: none; background-color: #DA0037; margin-bottom: 20px; height: 2px; width: 200px;">
 			<li class="sub2">
 				<form id="submitID" action="go_get_waiting" method="post">
-					<a onclick="submit_form()">나의 웨이팅</a>
+					<a onclick="location.href='/wgt/controller/get_waiting'">나의 웨이팅</a>
 				</form>
 			</li>
 			<li class="sub3"><a onclick="location.href='/wgt/userInfo';">회원정보
 					보기</a></li>
+			<hr style="border: none; width: 200px;">
 			<li class="sub4"><a onclick="location.href='/wgt/logOut';">로그아웃</a>
 			</li>
 		</ul>
@@ -113,6 +115,37 @@ const gnbBtn = document.querySelector("#gnb")
 		
 		위에 2번에 해당하는 부분을 클릭했을때 원래 화면으로 돌아오는 addEventListener
 		bodyClick.addEventListener("click", removeOn);
-		*/		
+		*/
+		
+		const bodytoggle = document.querySelector(".header_form")
+		const gnbBtn = document.querySelector("#gnb")
+		const toggleBtn = document.querySelector(".userInformation")
+		
+
+
+		function onClicksubMit() {
+			bodytoggle.submit(event.target.value);
+		}
+
+		function toggleHandler() {
+			toggleBtn.classList.toggle("open")
+			gnbBtn.classList.toggle("on")
+			bodytoggle.classList.toggle("on")
+		}
+
+		function removeOn() {
+			bodytoggle.classList.remove("on")
+			toggleBtn.classList.remove("open")
+			gnbBtn.classList.remove("on")
+		}
+		
+		function submit_form() {
+			document.getElementById('submitID').submit();
+
+		}
+
+
+		toggleBtn.addEventListener("click", toggleHandler);
+
 </script>
 </html>

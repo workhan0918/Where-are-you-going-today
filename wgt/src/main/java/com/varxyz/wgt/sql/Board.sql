@@ -31,6 +31,6 @@ CREATE TABLE Likes(
 
 SELECT * FROM Likes;
 
-DROP TABLE Board;
+DROP TABLE Likes;
 
 INSERT INTO Likes VALUES(0);

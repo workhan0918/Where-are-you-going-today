@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -54,9 +55,14 @@ public class BoardDao {
 	}
 	
 	//제목으로 게시글 찾기
-	public List<Board> search(String title) {
-		String sql = "SELECT * FROM Board WHERE title like '%" + title + "%' ORDER BY regDate DESC";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Board>(Board.class));
+	public List<Board> search(String title, String bnsNum) {
+		String sql = "SELECT * FROM Board WHERE title like '%" + title + "%' AND businessNumber = ? ORDER BY regDate DESC";
+		try {
+			jdbcTemplate.query(sql, new BeanPropertyRowMapper<Board>(Board.class), bnsNum);
+		}catch(EmptyResultDataAccessException e){
+			e.printStackTrace();
+		}
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Board>(Board.class), bnsNum);
 	}
 	
 	//고유번호로 게시물 정보 갖고오기

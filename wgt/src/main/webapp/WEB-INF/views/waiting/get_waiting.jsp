@@ -19,6 +19,11 @@
 			window.location.href = "/mapController";
 			locate.reload();
 		}
+		
+		function go_back() {
+			history.back();
+		}
+		
 	</script>
 	<div id="wrap">
 		<header id="header">
@@ -40,21 +45,21 @@
 			<form action="get_waiting" method="post" class="form_style">
 				<c:if test="${shopTel != '-'}">
 					<div class="btn_wrap">
-						<a class="prev_btn" style="width: 386px; height: 63px; line-height: 30px;"
-							aria-current="page" href='<c:url value="/map/map"/>'>홈</a> <input
-							type="submit" value="웨이팅 취소" class="next_btn">
+						<a class="prev_btn"
+							style="width: 386px; height: 63px; line-height: 30px;"
+							aria-current="page" onclick="go_back()">뒤로가기</a> <input t
+							ype="submit" value="웨이팅 취소" class="next_btn">
 					</div>
 				</c:if>
 				<c:if test="${shopTel == '-'}">
 					<div class="btn_wrap">
-						<a class="prev_btn" style="margin-right: 10px;" aria-current="page"
-							href='<c:url value="/map/map"/>'>홈</a>
+						<a class="prev_btn" style="margin-right: 10px;"
+							aria-current="page" onclick="go_back()">뒤로가기</a>
 					</div>
 				</c:if>
 			</form>
 		</div>
 		<hr>
-
 		<footer id="footer">Copyright (c) 2022 Copyright Holder All
 			Rights Reserved.</footer>
 	</div>

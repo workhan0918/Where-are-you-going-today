@@ -16,9 +16,9 @@ body{
 ::-webkit-scrollbar {
   display: none;
 }
-.fa-instagram:before {
+/* .fa-utensils:before {
     color: #DA0037;
-}
+} */
 .container{
  border : 1px solid rgba(var(--b6a,219,219,219),1);;
  display : flex;
@@ -41,7 +41,7 @@ body{
     align-content: center;
     border-bottom : 1px solid rgba(var(--b6a,219,219,219),1);
     height : 40px;
-    padding : 30px 0 70px 0;
+    padding : 25px 0 70px 0;
 }
 .headerContainer p {
 	margin: 0 auto;
@@ -54,15 +54,21 @@ body{
     width : 100%;
     align-items : center;
 }
-.WestagramTag{
+.bannerTag{
     display : flex;
+    justify-content: center;
 }
-.WestagramTag a{
+.bannerTag a{
     text-decoration: none;
     font-size : 30px;
     color : black;
     font-weight: bold;
     font-family : "Lobster", cursive;
+}
+.bannerTag .shopname{
+	font-family: 'KOTRAHOPE';
+	font-size: 32px;
+	margin: 0 10px 0 10px;
 }
 .headerSearchBar{
     display : flex;
@@ -70,7 +76,7 @@ body{
     align-items: center;
     border : 1px solid rgba(var(--b6a,219,219,219),1);
     padding : 5px 5px 5px 5px;
-    margin-top: 20px;
+    margin-top: 22px;
 }
 .write_area .title_area, .write_area .content_area {
 	font-size: 15px;
@@ -227,7 +233,7 @@ article{
     bottom: 12%;
     font-size: 15px;
 }
-.WestagramTag span {
+.bannerTag span {
 	color: #DA0037;
 }
 .headerContents button {
@@ -243,13 +249,13 @@ article{
 .mypage #user {
 	position: absolute;
     cursor: pointer;
-    top: 13%;
+    top: 11%;
     right: 2%;
 }
 .mypage #gohome {
 	position: absolute;
     cursor: pointer;
-    top: 13%;
+    top: 11%;
     left: 2%;
 }
 /*날짜 표시*/

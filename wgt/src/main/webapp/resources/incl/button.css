@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+li {
+	list-style: none;
+}
+
 /*햄버거 버튼*/
 .userInformation {
     position: fixed;
@@ -85,7 +89,7 @@
 /*유저 상세보기*/
 #gnb {
 	margin-left: 177px;
-    margin-top: 277px;
+    margin-top: 358px;
 	position: fixed;
 	margin-left: 100%;
 	z-index: 998;
@@ -93,7 +97,7 @@
 	width: 223px;
 	border: 3px solid #DA0037;
 	border-radius: 15px;
-	height: 280px;
+	height: 350px;
 	overflow: auto;
 	box-sizing: border-box;
 	padding: 10px;
@@ -103,9 +107,8 @@
 }
 
 #gnb.on {
-	margin-left: 177px;
-    margin-top: 277px;
-    line-height: 52px;
+    margin-left: 178px;
+    line-height: 66px;
 }
 
 #gnb ul li {
@@ -117,13 +120,6 @@
 	cursor: default;
 	font-size: 26px;
 	line-height: 26px;
-	margin-bottom: 42px;
+	margin-bottom: 10px;
 }
 
-/*header_form*/
-.header_form {
-}
-
-.header_form.on {
-	opacity: 15%;
-}

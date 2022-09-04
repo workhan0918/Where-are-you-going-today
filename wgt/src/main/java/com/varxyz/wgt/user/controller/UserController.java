@@ -90,7 +90,7 @@ public class UserController {
 			model.addAttribute("msg", "중복된 아이디 입니다!!");
 			model.addAttribute("url", "addUser");
 			
-			return "error/error";
+			return "alert/back";
 		}
 		
 			// 생성되기 전에 위에서 중복검사를 하고 유저를 여기서 추가해야함

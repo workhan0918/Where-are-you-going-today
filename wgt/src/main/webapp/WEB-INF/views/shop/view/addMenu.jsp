@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../resources/shopStyle.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,  maximum-scale=1.0, minimum-scale=1.0">
-    <title>가게 등록</title>
+    <title>메뉴 추가</title>
   </head>
   <body>
     <div id="wrap">

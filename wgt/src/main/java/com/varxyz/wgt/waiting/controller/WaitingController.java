@@ -66,6 +66,7 @@ public class WaitingController {
 			model.addAttribute("allCount", "0");
 			model.addAttribute("waiting", noWaiting);
 			model.addAttribute("shopTel", "-");
+			model.addAttribute("userId", userId);
 			return "waiting/get_waiting";
 		}
 

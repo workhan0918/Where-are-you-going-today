@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.varxyz.wgt.board.domain.Board;
 import com.varxyz.wgt.board.service.BoardService;
 import com.varxyz.wgt.board.service.BoardServiceImpl;
+import com.varxyz.wgt.shop.service.ShopService;
+import com.varxyz.wgt.shop.service.ShopServiceImpl;
 import com.varxyz.wgt.user.service.UserService;
 import com.varxyz.wgt.user.serviceImpl.UserServiceImpl;
 
@@ -26,6 +28,7 @@ import com.varxyz.wgt.user.serviceImpl.UserServiceImpl;
 public class MypageController {
 	BoardService service = new BoardServiceImpl();
 	UserService userService = new UserServiceImpl();
+	ShopService service2 = new ShopServiceImpl();
 
 	// 자기가 작성한 게시글만 가져오기
 	@GetMapping("/board/mypage")
@@ -49,7 +52,7 @@ public class MypageController {
 				myBoard.add(service.read(bnsNum).get(i));
 			}
 		}
-
+		model.addAttribute("shop", service2.findShopByBnsNum(bnsNum).getShopName()); // 상점명 불러오기
 		model.addAttribute("userId", userId);
 		model.addAttribute("mypageboard", myBoard);
 
@@ -60,6 +63,9 @@ public class MypageController {
 	@GetMapping("/board/update")
 	public String updateget(@RequestParam("number") int number, MultipartFile file, HttpServletRequest request,
 			HttpSession session, Model model, Board board) {
+		String userId = (String) session.getAttribute("userId");
+		String bnsNum = (String) session.getAttribute("bnsNum");
+		model.addAttribute("shop", service2.findShopByBnsNum(bnsNum).getShopName()); // 상점명 불러오기
 		model.addAttribute("board", service.searchByNumber(number));
 //		System.out.println(service.searchByNumber(number));
 		return "board/update";

@@ -44,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Board> search(String title) {
-		return dao.search(title);
+	public List<Board> search(String title, String bnsNum) {
+		return dao.search(title, bnsNum);
 	}
 
 	@Override
