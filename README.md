@@ -358,11 +358,6 @@ Menu menu = new Menu();
 
 ![image](https://user-images.githubusercontent.com/100820039/188295447-51829cbc-a5e6-4a24-84e7-1cbacb23173a.png)
 
- 
-# 게시글 삭제
-
-# 게시글 검색
-
 # 게시글 좋아요
 
 게시글 좋아요 기능
@@ -455,6 +450,9 @@ false라면 게시글의 좋아요 이미지 모두를 흰색하트로 변경하
 
 # 관리자 페이지
 
+![image](https://user-images.githubusercontent.com/100820039/188304246-eeed7ce9-0b9b-41e9-867d-83e93ff9b6c3.png)
+
+![image](https://user-images.githubusercontent.com/100820039/188304286-28829a7f-5ee7-454d-9cb1-7968d3aec57b.png)
 
 
 
